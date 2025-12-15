@@ -164,6 +164,13 @@ By integrating strong data cleaning, relational modeling, and pivot-driven analy
 
 ---
 
+
+## 📊 Dashboard Preview
+
+![Food Mart Dashboard](images/1st_Dashboard.png)
+![Food Mart Dashboard](images/2nd_Dashboard.png)
+![Food Mart Dashboard](images/3rd_Dashboard.png)
+
 ## 👨‍💻 Team members
 
 <div align="center">
@@ -175,10 +182,3 @@ By integrating strong data cleaning, relational modeling, and pivot-driven analy
 | [<span style="color:#58a6ff;">🔗 GitHub Profile</span>](https://github.com/A7med668) | [<span style="color:#58a6ff;">🔗 GitHub Profile</span>](https://github.com/omarhamed888) |
 
 </div>
-
----
-## 📊 Dashboard Preview
-
-![Food Mart Dashboard](images/1st_Dashboard.png)
-![Food Mart Dashboard](images/2nd_Dashboard.png)
-![Food Mart Dashboard](images/3rd_Dashboard.png)
