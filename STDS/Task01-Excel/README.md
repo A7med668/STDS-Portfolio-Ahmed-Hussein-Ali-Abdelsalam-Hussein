@@ -170,15 +170,3 @@ By integrating strong data cleaning, relational modeling, and pivot-driven analy
 ![Food Mart Dashboard](images/1st_Dashboard.png)
 ![Food Mart Dashboard](images/2nd_Dashboard.png)
 ![Food Mart Dashboard](images/3rd_Dashboard.png)
-
-## 👨‍💻 Team members
-
-<div align="center">
-
-| [<img src="https://avatars.githubusercontent.com/A7med668" width="120px" style="border-radius:50%; border:3px solid #58a6ff;">](https://github.com/A7med668) | [<img src="https://avatars.githubusercontent.com/omarhamed888" width="120px" style="border-radius:50%; border:3px solid #58a6ff;">](https://github.com/omarhamed888) |
-|:--:|:--:|
-| <span style="color:#58a6ff; font-weight:bold;">Ahmed Hussein<br>Ali Abdelsalam Hussein</span> | <span style="color:#58a6ff; font-weight:bold;">Omar Hamed<br>Ali AboElsoud</span> |
-| <span style="color:#8ab4f8;">👨‍💻 Data Science Student</span> | <span style="color:#8ab4f8;">👨‍💻 Data Science Student</span> |
-| [<span style="color:#58a6ff;">🔗 GitHub Profile</span>](https://github.com/A7med668) | [<span style="color:#58a6ff;">🔗 GitHub Profile</span>](https://github.com/omarhamed888) |
-
-</div>
