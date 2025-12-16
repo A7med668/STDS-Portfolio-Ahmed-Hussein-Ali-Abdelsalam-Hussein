@@ -236,9 +236,3 @@ Potential areas for dashboard expansion:
 - [ ] Customer satisfaction metrics integration
 - [ ] Real-time sales monitoring dashboard
 - [ ] Mobile app version for on-the-go insights
-
----
-
-## 📝 License
-
-This project is available under the MIT License. See LICENSE file for details.
