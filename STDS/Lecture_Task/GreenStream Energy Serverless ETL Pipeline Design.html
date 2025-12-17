@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" style=""><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETL Architecture &amp; Transformation Pipeline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #2c3e50;
+        --secondary: #34495e;
+        --accent: #3498db;
+        --light-bg: #f8f9fa;
+        --white: #ffffff;
+
+        /* Layer Colors */
+        --color-raw: #3498db;
+        --color-raw-light: #ebf5fb;
+        --color-orch: #9b59b6;
+        --color-orch-light: #f5eef8;
+        --color-trans: #27ae60;
+        --color-trans-light: #eafaf1;
+        --color-struct: #16a085;
+        --color-struct-light: #e8f8f5;
+        --color-analytics: #e67e22;
+        --color-analytics-light: #fbe6d3;
+        --color-error: #e74c3c;
+        --color-error-light: #fadbd8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        line-height: 1.6;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f2f5;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background-color: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      /* 1. Header Section */
+      header {
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        color: white;
+        padding: 60px 40px;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      header .subtitle {
+        margin-top: 10px;
+        font-size: 1.25rem;
+        font-weight: 300;
+        opacity: 0.9;
+      }
+
+      header .meta {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .content {
+        padding: 50px 60px;
+      }
+
+      /* Section Styling */
+      section {
+        margin-bottom: 60px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid #eee;
+      }
+
+      section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      h2 {
+        color: var(--primary);
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+        border-left: 5px solid var(--accent);
+        padding-left: 15px;
+      }
+
+      h3 {
+        color: var(--secondary);
+        font-size: 1.2rem;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* 2. Diagram Styling */
+      .diagram-container {
+        background-color: #fcfcfc;
+        padding: 30px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        position: relative;
+      }
+
+      .flow-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+        position: relative;
+      }
+
+      .box {
+        padding: 15px 20px;
+        border-radius: 8px;
+        border: 2px solid;
+        background: white;
+        text-align: center;
+        position: relative;
+        min-width: 200px;
+        font-weight: 500;
+        z-index: 2;
+      }
+
+      .box-title {
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .box-desc {
+        font-size: 0.8rem;
+        color: #666;
+        line-height: 1.3;
+      }
+
+      /* Color Coding */
+      .raw {
+        border-color: var(--color-raw);
+        color: var(--color-raw);
+      }
+      .raw-bg {
+        background-color: var(--color-raw-light);
+      }
+
+      .orch {
+        border-color: var(--color-orch);
+        color: var(--color-orch);
+      }
+      .orch-bg {
+        background-color: var(--color-orch-light);
+      }
+
+      .trans {
+        border-color: var(--color-trans);
+        color: var(--color-trans);
+      }
+      .trans-bg {
+        background-color: var(--color-trans-light);
+      }
+
+      .struct {
+        border-color: var(--color-struct);
+        color: var(--color-struct);
+      }
+      .struct-bg {
+        background-color: var(--color-struct-light);
+      }
+
+      .analytics {
+        border-color: var(--color-analytics);
+        color: var(--color-analytics);
+      }
+      .analytics-bg {
+        background-color: var(--color-analytics-light);
+      }
+
+      .error {
+        border-color: var(--color-error);
+        color: var(--color-error);
+        border-style: dashed;
+      }
+      .error-bg {
+        background-color: var(--color-error-light);
+      }
+
+      /* Connectors */
+      .connector-down {
+        position: absolute;
+        height: 40px;
+        width: 2px;
+        background-color: #ccc;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .connector-down::after {
+        content: '▼';
+        position: absolute;
+        bottom: -5px;
+        left: -5px;
+        color: #ccc;
+        font-size: 10px;
+      }
+
+      .side-arrow-right {
+        position: absolute;
+        right: -40px;
+        top: 50%;
+        width: 40px;
+        height: 2px;
+        background-color: #e74c3c;
+        border-top: 1px dashed #e74c3c;
+        background: none;
+      }
+
+      .side-arrow-right::after {
+        content: '►';
+        position: absolute;
+        right: -5px;
+        top: -6px;
+        color: #e74c3c;
+        font-size: 10px;
+      }
+
+      .legend {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #666;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* 3. Business Rules Styling */
+      .rules-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+      }
+
+      .rule-card {
+        background: #fff;
+        border: 1px solid #eaeaea;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+        transition: transform 0.2s;
+      }
+
+      .rule-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .rule-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        color: var(--secondary);
+        font-weight: 600;
+      }
+
+      .rule-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .rule-list li {
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+        position: relative;
+        padding-left: 20px;
+      }
+
+      .rule-list li::before {
+        content: '•';
+        color: var(--accent);
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-left: 5px;
+      }
+
+      .badge-warning {
+        background: #fef9e7;
+        color: #f1c40f;
+        border: 1px solid #fceeb5;
+      }
+      .badge-danger {
+        background: #fdedec;
+        color: #e74c3c;
+        border: 1px solid #fadbd8;
+      }
+      .badge-info {
+        background: #ebf5fb;
+        color: #3498db;
+        border: 1px solid #d6eaf8;
+      }
+
+      /* 4. Timeline Styling */
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .timeline::after {
+        content: '';
+        position: absolute;
+        width: 2px;
+        background-color: #e9ecef;
+        top: 0;
+        bottom: 0;
+        left: 50px;
+        margin-left: -1px;
+      }
+
+      .timeline-step {
+        position: relative;
+        background-color: inherit;
+        margin-bottom: 30px;
+        margin-left: 80px;
+      }
+
+      .step-circle {
+        position: absolute;
+        left: -80px;
+        width: 40px;
+        height: 40px;
+        right: auto;
+        background-color: white;
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: var(--accent);
+        box-shadow: 0 0 0 4px #fff;
+      }
+
+      .step-content {
+        padding: 20px;
+        background-color: white;
+        border-radius: 6px;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .time-badge {
+        display: inline-block;
+        background-color: #e9ecef;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        color: #495057;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .step-title {
+        margin: 0 0 10px 0;
+        font-size: 1.1rem;
+        color: var(--primary);
+      }
+
+      .step-details {
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .outcome-box {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .outcome-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-left: 4px solid #28a745;
+      }
+      .outcome-check {
+        background-color: #fff3cd;
+        color: #856404;
+        border-left: 4px solid #ffc107;
+      }
+      .outcome-fail {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+      }
+
+      /* 5. Summary Slide */
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .summary-item {
+        text-align: center;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .summary-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .summary-title {
+        font-weight: 700;
+        display: block;
+        margin-bottom: 5px;
+        color: var(--primary);
+      }
+
+      .summary-desc {
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      /* Utility */
+      code {
+        background-color: #f1f3f5;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        font-size: 0.85em;
+        color: #d63384;
+      }
+
+      @media (max-width: 768px) {
+        .rules-grid,
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+        .content {
+          padding: 20px;
+        }
+        header {
+          padding: 40px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body style="">
+    <div class="container">
+      <header>
+        <h1>Hands-on Task: Design Thinking for Data Scientist</h1>
+        <div class="subtitle">ETL Architecture &amp; Data Transformation Pipeline</div>
+        <div class="meta">GreenStream Energy Project Submission</div>
+      </header>
+
+      <div class="content">
+        <!-- Task A -->
+        <section id="architecture">
+          <h2>Task A: ETL Architecture Diagram</h2>
+          <div class="diagram-container">
+            <div style="text-align: center; margin-bottom: 30px; font-weight: bold; color: #555">
+              Conceptual Serverless ETL Pipeline for GreenStream Energy
+            </div>
+
+            <!-- External Source -->
+            <div class="flow-row">
+              <div class="box" style="border-color: #7f8c8d">
+                <div class="box-title">EXTERNAL DATA SOURCE</div>
+                <div class="box-desc">[Smart Meters] → [SFTP/API]</div>
+                <div class="connector-down"></div>
+              </div>
+            </div>
+
+            <!-- Raw Storage -->
+            <div class="flow-row">
+              <div class="box raw raw-bg">
+                <div class="box-title">RAW STORAGE LAYER</div>
+                <div class="box-desc">Object Storage (S3/GCS)<br>Timestamped partitions</div>
+                <div class="connector-down"></div>
+                <!-- Failure Path Arrow -->
+                <div class="side-arrow-right"></div>
+                <div class="box error error-bg" style="position: absolute; right: -250px; top: 0">
+                  <div class="box-title">DEAD LETTER QUEUE</div>
+                  <div class="box-desc">Failed Ingestion<br>Manual Review</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Orchestration -->
+            <div class="flow-row">
+              <div class="box orch orch-bg">
+                <div class="box-title">TRANSFORMATION ORCHESTRATION</div>
+                <div class="box-desc">Serverless Workflow<br>Validation &amp; Triggers</div>
+                <div class="connector-down"></div>
+                <!-- Error Path Arrow -->
+                <div class="side-arrow-right"></div>
+                <div class="box error error-bg" style="position: absolute; right: -250px; top: 0">
+                  <div class="box-title">ERROR QUEUE &amp; ALERTS</div>
+                  <div class="box-desc">Failed Transformations<br>Auto-Alerts</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transformation -->
+            <div class="flow-row">
+              <div class="box trans trans-bg">
+                <div class="box-title">TRANSFORMATION PROCESSING</div>
+                <div class="box-desc">Serverless Compute Functions<br>Apply Business Rules</div>
+                <div class="connector-down"></div>
+              </div>
+            </div>
+
+            <!-- Structured Storage -->
+            <div class="flow-row" style="gap: 20px">
+              <div class="box struct struct-bg">
+                <div class="box-title">VALIDATED DATA</div>
+                <div class="box-desc">Structured Database (RDS)<br>Ready for Real-time Apps</div>
+                <div class="connector-down"></div>
+              </div>
+              <div class="box struct struct-bg" style="border-style: dashed; opacity: 0.8">
+                <div class="box-title">QUARANTINED DATA</div>
+                <div class="box-desc">Partial Records<br>Review Required</div>
+              </div>
+            </div>
+
+            <!-- Analytics Storage -->
+            <div class="flow-row">
+              <div class="box analytics analytics-bg">
+                <div class="box-title">ANALYTICS STORAGE LAYER</div>
+                <div class="box-desc">Columnar Format (Parquet)<br>Historical Analysis</div>
+              </div>
+            </div>
+
+            <div class="legend">
+              <div class="legend-item"><span style="color: #2c3e50">──►</span> Success Path</div>
+              <div class="legend-item"><span style="color: #e74c3c">- - ►</span> Failure/Error Path</div>
+              <div class="legend-item"><span>▣</span> Layer Boundary</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Task B -->
+        <section id="business-rules">
+          <h2>Task B: Transformation Logic &amp; Business Rules</h2>
+
+          <div class="rules-grid">
+            <!-- Unit Standardization -->
+            <div class="rule-card">
+              <div class="rule-header"><span style="font-size: 1.5rem">⚡</span> Unit Standardization</div>
+              <ul class="rule-list">
+                <li>If unit is "W" or "watts", convert to kW (÷1000).</li>
+                <li>If unit is "kWh", treat as kW for hourly readings.</li>
+                <li><strong>Inference:</strong> If unit missing: value &lt; 10 = kW; value &gt; 1000 = W.</li>
+              </ul>
+            </div>
+
+            <!-- Missing Value Handling -->
+            <div class="rule-card">
+              <div class="rule-header"><span style="font-size: 1.5rem">🔍</span> Missing Value Handling</div>
+              <ul class="rule-list">
+                <li>Gap &lt; 4h: Interpolate linearly. <span class="badge badge-info">Auto-fix</span></li>
+                <li>Gap 4h - 24h: Flag <span class="badge badge-warning">missing_short</span>, exclude from peak.</li>
+                <li>Gap ≥ 24h: Flag <span class="badge badge-danger">missing_extended</span>, trigger alert.</li>
+                <li>Reduce quality score proportionally to gap duration.</li>
+              </ul>
+            </div>
+
+            <!-- Data Validation -->
+            <div class="rule-card">
+              <div class="rule-header"><span style="font-size: 1.5rem">✓</span> Data Validation</div>
+              <ul class="rule-list">
+                <li>Verify <code>meter_id</code> against master registry.</li>
+                <li>Timestamp sanity check (±1 hour window).</li>
+                <li><strong>Physical Limits:</strong> Min 0 kW, Max 20 kW.</li>
+                <li><strong>Rate Check:</strong> &gt;500% increase or &gt;90% drop flagged.</li>
+              </ul>
+            </div>
+
+            <!-- Faulty Meter Detection -->
+            <div class="rule-card">
+              <div class="rule-header"><span style="font-size: 1.5rem">⚠️</span> Faulty Meter Detection</div>
+              <ul class="rule-list">
+                <li><strong>Zero Value:</strong> 0 kW for ≥ 48h (non-vacant).</li>
+                <li><strong>Stuck Value:</strong> No variance for ≥ 24h.</li>
+                <li><strong>Overload:</strong> &gt;20kW for ≥ 6 consecutive readings.</li>
+                <li><strong>Low Variance:</strong> 7-day CV &lt; 0.01.</li>
+                <li><strong>Atypical:</strong> Correlation with neighborhood &lt; 0.3.</li>
+              </ul>
+            </div>
+
+            <!-- Peak Identification -->
+            <div class="rule-card">
+              <div class="rule-header"><span style="font-size: 1.5rem">📊</span> Peak Period ID</div>
+              <ul class="rule-list">
+                <li>Calculate hourly aggregates across all meters.</li>
+                <li>Identify top 3 hours of consumption.</li>
+                <li>Apply seasonal adjustments (Summer/Winter).</li>
+                <li>Exclude holidays &amp; extreme weather days.</li>
+              </ul>
+            </div>
+
+            <!-- Quality Scoring -->
+            <div class="rule-card">
+              <div class="rule-header"><span style="font-size: 1.5rem">⭐</span> Data Quality Scoring</div>
+              <ul class="rule-list">
+                <li>Start Score: <strong>100</strong>.</li>
+                <li>
+                  <strong>Deductions:</strong> <br>-5 (Unit Conversion) <br>-10/hr (Interpolation) <br>-15
+                  (Warnings)
+                </li>
+                <li><strong>Threshold:</strong> Score &lt; 70 excluded from analytics.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Task C -->
+        <section id="lifecycle">
+          <h2>Task C: Journey of a Single Smart Meter Reading</h2>
+          <div style="
+              background: #f8f9fa;
+              padding: 15px;
+              border-radius: 8px;
+              margin-bottom: 30px;
+              font-style: italic;
+              text-align: center;
+              color: #666;
+            ">
+            Scenario: Meter #MTR-78910 records 1250 Watts at 14:00:00
+          </div>
+
+          <div class="timeline">
+            <!-- Step 1 -->
+            <div class="timeline-step">
+              <div class="step-circle">1</div>
+              <div class="step-content">
+                <div class="time-badge">t₀ (14:00)</div>
+                <h3 class="step-title">Data Generation &amp; Upload</h3>
+                <div class="step-details">
+                  Meter records 1250W. Internal clock timestamps 2024-03-15 14:00:00. Transmits CSV string.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="timeline-step">
+              <div class="step-circle">2</div>
+              <div class="step-content">
+                <div class="time-badge">t₀ + 1 min</div>
+                <h3 class="step-title">Raw Storage Ingestion</h3>
+                <div class="step-details">File arrives at S3 endpoint. Format validation occurs.</div>
+                <div class="outcome-box outcome-check">
+                  <span>✓ Validation Success: Saved to <code>raw/2024/03/15/14/</code></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="timeline-step">
+              <div class="step-circle">3</div>
+              <div class="step-content">
+                <div class="time-badge">t₀ + 2 min</div>
+                <h3 class="step-title">Orchestration Trigger</h3>
+                <div class="step-details">
+                  S3 event triggers Orchestrator. Job ID <code>TRN-20240315-1405-001</code> assigned.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="timeline-step">
+              <div class="step-circle">4</div>
+              <div class="step-content">
+                <div class="time-badge">t₀ + 3 min</div>
+                <h3 class="step-title">Transformation Execution</h3>
+                <div class="step-details">
+                  Application of Business Rules (Task B).
+                  <ul>
+                    <li><strong>Unit:</strong> 1250 W converted to 1.25 kW</li>
+                    <li><strong>Limits:</strong> 1.25 &lt; 20kW (Pass)</li>
+                    <li><strong>Faults:</strong> No historical fault patterns</li>
+                  </ul>
+                </div>
+                <div class="outcome-box outcome-success">
+                  <span>Final Quality Score: 95/100 ( -5 for unit conversion)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Failure Scenario Box -->
+            <div class="timeline-step">
+              <div class="step-circle" style="border-color: #e74c3c; color: #e74c3c">!</div>
+              <div class="step-content" style="border-left: 4px solid #e74c3c">
+                <h3 class="step-title" style="color: #e74c3c">Alternative Path: Failure Scenario</h3>
+                <div class="step-details">
+                  If transformation fails (e.g. timeout):
+                  <ol>
+                    <li>Auto-retry triggered (up to 3x)</li>
+                    <li>If fails: Alert sent to Data Engineering</li>
+                    <li>File moved to Error Queue for manual review</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="timeline-step">
+              <div class="step-circle">5</div>
+              <div class="step-content">
+                <div class="time-badge">t₀ + 4 min</div>
+                <h3 class="step-title">Structured Storage (RDS)</h3>
+                <div class="step-details">
+                  Clean record inserted into SQL database. Immediately available for real-time dashboards.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="timeline-step">
+              <div class="step-circle">6</div>
+              <div class="step-content">
+                <div class="time-badge">t₀ + 60 min</div>
+                <h3 class="step-title">Batch Aggregation</h3>
+                <div class="step-details">
+                  Hourly job runs at 15:00. Groups 14:00-14:59 records. Calculates Avg/Min/Max stats.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="timeline-step">
+              <div class="step-circle">7</div>
+              <div class="step-content">
+                <div class="time-badge">t₀ + 65 min</div>
+                <h3 class="step-title">Parquet Archival</h3>
+                <div class="step-details">
+                  Data written to columnar format (Parquet) in Analytics bucket. Optimized for long-term query
+                  performance.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 8 -->
+            <div class="timeline-step">
+              <div class="step-circle">8</div>
+              <div class="step-content">
+                <div class="time-badge">End State</div>
+                <h3 class="step-title">Data Utilization</h3>
+                <div class="step-details">
+                  <strong>Immediate:</strong> Real-time dashboard usage.<br>
+                  <strong>Long-term:</strong> Data Scientist access via Athena/Presto for ML modeling.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section id="summary">
+          <h2>Final Summary</h2>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-icon">⏱️</span>
+              <span class="summary-title">Efficiency</span>
+              <span class="summary-desc">~65 mins end-to-end latency for analytics; &lt;4 mins for real-time.</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-icon">🛡️</span>
+              <span class="summary-title">Resilience</span>
+              <span class="summary-desc">Dead Letter Queues and Auto-Retries ensure 0% data loss.</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-icon">📈</span>
+              <span class="summary-title">Quality</span>
+              <span class="summary-desc">Automated scoring ensures only high-trust data (Score &gt;70) is used.</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-icon">💾</span>
+              <span class="summary-title">Optimization</span>
+              <span class="summary-desc">Parquet compression reduces long-term storage costs by ~70%.</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  
+
+</body></html>
