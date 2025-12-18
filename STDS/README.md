@@ -1,4 +1,4 @@
-# STDS Portfolio - Ahmed Hussein
+# STDS Portfolio - Ahmed Hussein Ali Abdelsalam Hussein
 
 This repository contains a collection of data analytics and business intelligence projects demonstrating skills in data cleaning, modeling, visualization, and ETL pipeline design.
 
