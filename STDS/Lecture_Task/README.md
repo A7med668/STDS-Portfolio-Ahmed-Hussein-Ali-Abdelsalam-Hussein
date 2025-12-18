@@ -284,6 +284,10 @@ Usage:
 
 ## 🔄 Data Journey: Single Reading Lifecycle
 
+<p align="center">
+  <img src="assets/Data_transfer.png" alt="AdventureWorks Database Analysis Project" width="800"/>
+</p>
+
 ### Scenario: Meter #MTR-78910 records 1250 Watts at 14:00:00
 
 ```
