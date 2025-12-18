@@ -1,4 +1,4 @@
-# STDS Portfolio:Ahmed Hussein Ali Abdelsalam Hussein
+# STDS Portfolio: Ahmed Hussein Ali Abdelsalam Hussein
 
 <div align="center">
 
