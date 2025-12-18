@@ -286,11 +286,6 @@ Usage:
 
 ### Scenario: Meter #MTR-78910 records 1250 Watts at 14:00:00
 
-<p align="center">
-  <img src="assets/Data_transfer.png" alt="AdventureWorks Database Analysis Project" width="800"/>
-</p>
-
-
 ```
 Timeline (t₀ = 2024-03-15 14:00:00)
 
