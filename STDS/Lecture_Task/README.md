@@ -403,6 +403,10 @@ Timeline (t₀ = 2024-03-15 14:00:00)
 
 ### Error Handling Strategy
 
+<p align="center">
+  <img src="assets/Error Handling Matrix.png" alt="AdventureWorks Database Analysis Project" width="800"/>
+</p>
+
 ```
 ┌─────────────────────────────────────────────┐
 │           ERROR HANDLING MATRIX             │
