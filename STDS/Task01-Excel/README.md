@@ -24,6 +24,12 @@ This process enabled efficient aggregation, dynamic filtering, and accurate time
 
 ---
 
+## 📊 Dashboard Preview
+
+![Food Mart Dashboard](images/1st_Dashboard.png)
+![Food Mart Dashboard](images/2nd_Dashboard.png)
+![Food Mart Dashboard](images/3rd_Dashboard.png)
+
 ## 💰 Overview
 
 - **Total Sales**: $1,764,495  
@@ -162,11 +168,5 @@ The project achieved a **59.73% profit margin** with **$1.76M total sales**, unc
 
 By integrating strong data cleaning, relational modeling, and pivot-driven analysis, this project showcases a complete end-to-end Excel analytics workflow.
 
----
 
 
-## 📊 Dashboard Preview
-
-![Food Mart Dashboard](images/1st_Dashboard.png)
-![Food Mart Dashboard](images/2nd_Dashboard.png)
-![Food Mart Dashboard](images/3rd_Dashboard.png)
