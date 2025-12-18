@@ -1,0 +1,251 @@
+
+STDS Portfolio - Ahmed Hussein
+This repository contains a collection of data analytics and business intelligence projects demonstrating skills in data cleaning, modeling, visualization, and ETL pipeline design.
+
+📊 Projects Overview
+Project	Description	Tools	Key Focus
+Task 1	Food Mart Retail Analysis	Excel, Power Query, Power Pivot	Retail Analytics, Dashboarding
+Task 2	AdventureWorks Database Analysis	Excel, SQL	Sales Analytics, KPI Tracking
+Task 3	AdventureWorks Analytics Dashboard	Power BI, DAX, SQL	Business Intelligence, Interactive Dashboards
+Task 4	Adidas Sales & Profit Analysis	Power BI, Python, SQL	Sales Analysis, Geographic Visualization
+Lecture Task	GreenStream Energy ETL	Serverless Architecture	Data Engineering, ETL Pipeline Design
+📈 Task 1: Food Mart Retail Analysis
+Overview
+A comprehensive retail analysis project built entirely in Microsoft Excel, delivering actionable insights into sales performance, profitability, customer behavior, and regional trends for a retail business.
+
+Key Metrics
+Total Sales: $1,764,495
+Total Costs: $712k
+Profit Percentage: 59.73%
+Returns: 8,284 items
+Loyalty Cards: 10,281
+Data Preparation & Modeling
+Removed duplicates and unnecessary columns
+Created Calendar Table (1997–1998) for time-based analysis
+Established relationships between fact and dimension tables
+Built Pivot Tables as analytical foundation
+Key Insights
+Top Brands: Hermanos leads with $57k in sales
+Regional Performance: North West dominates with $847.8k
+Customer Segmentation: 90.41% revenue from normal customers
+Family Impact: Sales peak among families with 2–3 children
+Geographic Concentration: Richmond leads with 191 customers
+Tools & Techniques
+Microsoft Excel with Power Query for data cleaning
+Power Pivot for data modeling
+Pivot Tables & Charts for visualization
+Slicers & Filters for interactivity
+🏢 Task 2: AdventureWorks Database Analysis
+Project Overview
+Comprehensive analysis of the AdventureWorks database featuring interactive dashboards providing insights into sales performance, product analytics, territorial distribution, and employee metrics (2011-2014).
+
+Key Performance Indicators
+Total Due: $123.22M
+Sub Total: $109.85M
+Tax Amount: $10.19M
+Freight: $3.18M
+Total Quantity: 275K units
+Dashboard Sections
+1. Sales Overview & Territory Insights
+Peak Sales Month: March ($15.26M)
+Top Territory: Southwest ($127.15M)
+Time Series Analysis: Monthly sales trends with seasonal variations
+2. Product & Logistics Insights
+Top Product: Mountain-200 Black, 38 ($4.93M)
+Geographic Distribution: North America (72.4%), Europe (18.0%), Pacific (9.6%)
+Shipping Method: Ground shipping dominates (77% of freight costs)
+3. Category & Employee Insights
+Category Concentration: Bikes (86% of total sales)
+Top Employee: José Saraiva ($39.12M, 31.7% of company sales)
+Performance Gaps: Significant disparity between top performers
+Technical Implementation
+Data Processing: SQL Server for database management
+Visualization: Excel dashboards with interactive slicers
+Data Quality: Comprehensive validation checks and consistency monitoring
+📊 Task 3: AdventureWorks Analytics Dashboard
+Project Overview
+A comprehensive business intelligence solution built with Power BI providing deep insights into sales performance, product analytics, customer behavior, and operational metrics.
+
+Features
+Real-time KPI Tracking: Monitor critical business metrics
+Multi-dimensional Analysis: Across categories, regions, products, and time
+Interactive Visualizations: Dynamic charts and graphs
+Predictive Insights: Key influencers and trend analysis
+Geographic Intelligence: Regional performance tracking
+Technical Stack
+Data Visualization Layer: Power BI
+Data Processing Layer: DAX, SQL, Python
+Data Storage Layer: AdventureWorks Database
+Project Structure
+text
+AdventureWorks-Analytics/
+├── 📊 Dashboards/ (Overview.pbix, ProductAnalysis.pbix, CustomerAnalytics.pbix)
+├── 📁 Data/ (Sources, Processed)
+├── 📜 Scripts/ (ETL, Transformations)
+├── 🖼️ assets/ (dashboard screenshots)
+├── 📖 Documentation/ (UserGuide.md, DataDictionary.md)
+└── README.md
+Key Insights
+Category Performance: Bikes lead with $106M revenue
+Shipping Distribution: 87.9% standard cargo, 12.1% ground shipping
+Regional Breakdown: North America dominates market share
+Top Products: Mountain-200 series consistently performs best
+👟 Task 4: Adidas Sales & Profit Analysis
+Project Overview
+Interactive dashboard analyzing Adidas sales performance across the United States (2020-2022), providing insights into sales trends, profitability, retailer performance, and regional distribution.
+
+Key Metrics
+Total Sales: $899.90M
+Total Profit: $332.13M
+Units Sold: 2.48M
+Retailers: 9,648 locations
+Dashboard Features
+1. Sales Overview & Performance Metrics
+Geographic Maps: State and city-level sales visualization
+Sales Methods: Online (50.7%), Outlet (31.3%), In-store (18.0%)
+Time Series: Monthly performance trends with growth acceleration from mid-2021
+2. Retailer & Product Performance
+Top Retailers: West Gear ($32.41M), Foot Locker ($29.02M)
+Top Product: Men's Street Footwear (bestseller)
+Regional Performance: West region leads with 33.6% of sales
+3. Revenue Analysis & Product-Region Breakdown
+Revenue Trends: Significant growth from mid-2021, peaking in late 2022
+Product-Region Matrix: Detailed breakdown across 5 regions and 6 product categories
+City-Level Analysis: Major metropolitan sales hubs identified
+Interactive Capabilities
+Filter by region, state, city, sales method, retailer, and product category
+Cross-visual filtering and highlighting
+Geographic drill-down capabilities
+Technologies Used
+Visualization: Power BI/Tableau
+Data Processing: Python (Pandas, NumPy)
+Geographic Mapping: Mapbox/OpenStreetMap integration
+Data Storage: SQL Database
+⚡ Lecture Task: GreenStream Energy ETL Architecture
+Overview
+A serverless data transformation pipeline for smart meter data processing, designed for scalability, resilience, and operational excellence in energy data management.
+
+Architecture Components
+Data Flow
+text
+External Data → Raw Storage → Orchestration → Transformation → Validated Data → Analytics Storage
+Key Layers
+Raw Storage: Object storage with timestamped partitions
+Orchestration: Serverless workflow with schema validation
+Transformation: Serverless functions applying business rules
+Validated Storage: PostgreSQL/MySQL RDS for real-time access
+Analytics Storage: Columnar format (Parquet) for historical analysis
+Business Transformation Rules
+1. Unit Standardization ⚡
+Convert all power readings to kilowatts (kW)
+Handle missing units with inference logic
+Quality impact: -5 points for conversion
+2. Missing Value Handling 🔍
+Gap < 4h: Linear interpolation
+Gap 4h-24h: Mark as missing_short
+Gap ≥ 24h: Critical alert with engineering notification
+3. Data Validation ✓
+Meter registry verification
+Timestamp sanity checks
+Physical limits (0-20 kW)
+Rate-of-change detection
+4. Faulty Meter Detection ⚠️
+Zero Value Fault (≥48h consecutive zeros)
+Stuck Value Fault (no variance for ≥24h)
+Overload Fault (>20 kW for ≥6 readings)
+Low Variance and Correlation faults
+5. Quality Scoring System ⭐
+Base score: 100 points
+Deductions for conversions, interpolation, validations
+Thresholds: ≥90 (Premium), 70-89 (Standard), <70 (Quarantine)
+Performance Metrics
+Metric	Value	Target
+End-to-End Latency (Real-time)	<4 minutes	<5 min
+Data Loss Rate	0%	<0.01%
+Transformation Success Rate	99.7%	>99.5%
+Quality Score (Median)	95/100	>90
+Storage Cost Reduction	70%	>60%
+Resilience Features
+Dead Letter Queue for failed ingestion
+Auto-Retry (3x with exponential backoff)
+Quarantine Storage for partial records
+Comprehensive Monitoring with severity-based alerts
+Technology Stack
+Storage: Amazon S3, PostgreSQL RDS, Parquet
+Compute: AWS Lambda, Step Functions
+Monitoring: CloudWatch, SNS
+Security: AES-256 encryption, IAM roles, CloudTrail
+🛠️ Technologies Used Across Projects
+Data Analysis & Visualization
+Microsoft Excel: Advanced analytics, pivot tables, dashboards
+Power BI: Interactive dashboards, DAX measures, advanced visualizations
+Tableau: Geographic mapping, business intelligence
+Data Processing & Engineering
+SQL Server: Database management, query optimization
+Python: Data cleaning, transformation (Pandas, NumPy)
+Power Query: ETL processes, data shaping
+Data Engineering
+Cloud Services: AWS (S3, Lambda, RDS), GCP alternatives
+Data Formats: Parquet, CSV, relational databases
+Orchestration: Serverless workflows, error handling
+Methodologies
+Data Modeling: Star schema, dimension and fact tables
+ETL Design: Batch and real-time processing
+Quality Assurance: Validation rules, scoring systems
+Dashboard Design: User-centric visualization principles
+📁 Repository Structure
+text
+STDS-Portfolio/
+├── Task1-FoodMart-Analysis/ # Excel-based retail analysis
+├── Task2-AdventureWorks-Excel/ # Excel dashboard with SQL backend
+├── Task3-AdventureWorks-PowerBI/ # Power BI business intelligence
+├── Task4-Adidas-Analysis/ # Power BI sales dashboard
+├── LectureTask-ETL-Architecture/ # GreenStream Energy ETL design
+├── README.md # This file
+└── Documentation/ # Additional project documentation
+🚀 Getting Started
+Prerequisites
+Microsoft Excel (with Power Query and Power Pivot)
+Power BI Desktop (latest version)
+SQL Server Management Studio
+Python 3.x with pandas, numpy
+Installation & Usage
+Each project is contained in its own directory with specific instructions. Refer to individual project documentation for:
+
+Data source connections
+Dashboard opening instructions
+Filter usage and interaction guidelines
+Customization options
+📈 Key Skills Demonstrated
+Business Intelligence
+KPI definition and tracking
+Interactive dashboard design
+Cross-functional business analysis
+Data-driven decision support
+Data Analytics
+Statistical analysis and trend identification
+Customer segmentation and behavior analysis
+Geographic and demographic analysis
+Performance benchmarking
+Data Engineering
+ETL pipeline design and implementation
+Data quality assurance frameworks
+Scalable architecture design
+Error handling and resilience patterns
+Technical Proficiency
+Advanced Excel modeling and automation
+Power BI/Tableau visualization development
+SQL query optimization and database design
+Python data processing scripts
+📞 Contact & Support
+Author: Ahmed Hussein Ali Abdelsalam Hussein
+Email: ahmedhussein12215@gmail.com
+GitHub: A7med668
+
+For questions, collaboration opportunities, or additional information about any project in this portfolio, please reach out via email or GitHub issues.
+
+📝 License
+This portfolio is intended for demonstration purposes as part of academic and professional development. Specific datasets may be subject to their own licensing terms (AdventureWorks, Adidas sales data, etc.).
+
+Last Updated: March 2024
+Portfolio Version: 1.0
