@@ -1,5 +1,9 @@
 # STDS Portfolio: Ahmed Hussein Ali Abdelsalam Hussein
 
+<p align="center">
+  <img src="assest/Portflolio_header_image.png" alt="AdventureWorks Database Analysis Project" width="800"/>
+</p>
+
 <div align="center">
 
 **A Collection of Data Analysis, Visualization, and Engineering Projects**
