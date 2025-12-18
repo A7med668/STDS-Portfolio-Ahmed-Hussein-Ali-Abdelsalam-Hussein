@@ -6,10 +6,10 @@ This repository contains a collection of data analytics and business intelligenc
 
 | Project | Description | Tools | Key Focus |
 |---------|-------------|-------|-----------|
-| **Task 1** | Food Mart Retail Analysis | Excel, Power Query, Power Pivot | Retail Analytics, Dashboarding |
+| **Task 1** | Food Mart Retail Analysis | Excel | Retail Analytics, Dashboarding |
 | **Task 2** | AdventureWorks Database Analysis | Excel, SQL | Sales Analytics, KPI Tracking |
-| **Task 3** | AdventureWorks Analytics Dashboard | Power BI, DAX, SQL | Business Intelligence, Interactive Dashboards |
-| **Task 4** | Adidas Sales & Profit Analysis | Power BI, Python, SQL | Sales Analysis, Geographic Visualization |
+| **Task 3** | AdventureWorks Analytics Dashboard | Power BI | Business Intelligence, Interactive Dashboards |
+| **Task 4** | Adidas Sales & Profit Analysis | Tableau | Sales Analysis, Geographic Visualization |
 | **Lecture Task** | GreenStream Energy ETL | Serverless Architecture | Data Engineering, ETL Pipeline Design |
 
 ---
