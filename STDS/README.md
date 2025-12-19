@@ -344,6 +344,10 @@ Building on the SQL/Excel analysis, AdventureWorks needed:
 
 ## 4. 👟 Adidas Sales & Geographic Analysis
 
+<p align="center">
+  <img src="assest/Adidas sales.png" alt="AdventureWorks Database Analysis Project" width="800"/>
+</p>
+
 ### 📌 Project Overview
 A **geographically-focused Power BI analytics solution** analyzing **$899.90M in Adidas sales** across the United States from 2020-2022. Features advanced geographic visualizations, multi-dimensional sales channel analysis, and retailer performance tracking across 9,648 retail locations, demonstrating expertise in spatial analytics and business intelligence.
 
