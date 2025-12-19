@@ -144,6 +144,9 @@ Raw Data → Power Query Cleaning → Power Pivot Modeling → Pivot Tables → 
 ---
 
 ## 2. 💼 AdventureWorks Database Analytics
+<p align="center">
+  <img src="assest/Adv_SQL.png" alt="AdventureWorks Database Analysis Project" width="800"/>
+</p>
 
 ### 📌 Project Overview
 An **SQL-driven database analysis project** featuring three comprehensive Excel dashboards that transform AdventureWorks transactional data into strategic business intelligence. Combines advanced SQL preprocessing with Excel visualization to analyze $123.22M in revenue across multiple years, territories, and product lines.
