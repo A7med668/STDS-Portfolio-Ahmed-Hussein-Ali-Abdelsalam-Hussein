@@ -243,6 +243,10 @@ AdventureWorks management needed answers to:
 
 ## 3. 📊 AdventureWorks Power BI Dashboard
 
+<p align="center">
+  <img src="assest/Adv_Bi.png" alt="AdventureWorks Database Analysis Project" width="800"/>
+</p>
+
 ### 📌 Project Overview
 A **highly interactive Power BI business intelligence solution** featuring advanced visualizations, DAX measures, and key influencers analysis. Transforms the same AdventureWorks dataset into a dynamic, drill-through dashboard experience with real-time filtering, cross-visual interactions, and predictive insights.
 
