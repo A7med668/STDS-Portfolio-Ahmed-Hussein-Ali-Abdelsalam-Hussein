@@ -12,6 +12,7 @@
 
 [![Excel](https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)](https://www.microsoft.com/en-us/microsoft-365/excel)
 [![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
+[![Tableau](https://img.shields.io/badge/Tableau-C2188B?style=for-the-badge&logo=tableau&logoColor=white&labelColor-7209B7)](https://www.tableau.com/)
 [![SQL Server](https://img.shields.io/badge/SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)](https://www.microsoft.com/en-us/sql-server)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Data Engineering](https://img.shields.io/badge/Data_Engineering-FF6F00?style=for-the-badge&logo=apache-spark&logoColor=white)](https://spark.apache.org/)
