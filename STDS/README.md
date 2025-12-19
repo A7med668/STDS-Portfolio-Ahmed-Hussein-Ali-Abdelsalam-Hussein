@@ -513,6 +513,9 @@ Regional Share = DIVIDE([Region Sales], [Total Sales])
 ---
 
 ## 5. ⚡ GreenStream Energy ETL Pipeline
+<p align="center">
+  <img src="assest/ETL.png" alt="AdventureWorks Database Analysis Project" width="800"/>
+</p>
 
 ### 📌 Project Overview
 An **enterprise-grade serverless ETL architecture** designed for real-time smart meter data processing in the energy sector. Handles **100,000+ smart meters** with sub-4-minute latency, processing consumption data from ingestion through validation, transformation, and analytics-ready storage. Demonstrates advanced data engineering, cloud architecture, and operational resilience design.
