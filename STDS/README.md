@@ -875,7 +875,7 @@ STDS-Portfolio/
 
 **💻 GitHub:** [@A7med668](https://github.com/A7med668)
 
-**📂 Portfolio Repository:** [github.com/A7med668/STDS-Portfolio](https://github.com/A7med668/STDS-Portfolio) *(update with actual link)*
+**📂 Portfolio Repository:** [github.com/A7med668/STDS-Portfolio]([https://github.com/A7med668/STDS-Portfolio](https://github.com/A7med668/STDS-Portfolio-Ahmed-Hussein-Ali-Abdelsalam-Hussein/edit/master/STDS) *(update with actual link)*
 
 ---
 
