@@ -71,8 +71,6 @@ This portfolio showcases **5 comprehensive data analytics projects** demonstrati
   <img src="assest/Food_Mart.png" alt="AdventureWorks Database Analysis Project" width="800"/>
 </p>
 
-<div align="center">
-
 ### 📌 Project Overview
 A comprehensive **Excel-powered business intelligence solution** analyzing retail sales performance across brands, customers, regions, and product categories. Built entirely with Microsoft Excel's advanced features including Power Query, Power Pivot, and interactive dashboards to deliver actionable insights for retail decision-making.
 
